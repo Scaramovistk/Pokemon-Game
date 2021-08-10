@@ -12,7 +12,7 @@ int main(void)
     delay(1);
     do{
         
-         printf("\n**** Choose a option: ***\n");
+         printf("\n**** Choose a option: ****\n");
          printf("1 - START\n");
          printf("2 - CLOSE\n");
          scanf("%i", &play);
@@ -44,9 +44,9 @@ int main(void)
 
             struct evolv
             {   
-                int Fevolv;
-                int Sevolv;
-                int Tevolv;
+                int lvFEvolv;
+                int lvSEvolv;
+                int lvTEvolv;
                 struct atri Fevolv;
                 struct atri Sevolv;
                 struct atri Tevolv;
@@ -196,15 +196,12 @@ int main(void)
 // *********** Delay Function ***********
 void delay(int number_of_seconds)
 {
-    // Converting time into milli_seconds
+  
     int milli_seconds = 1000 * number_of_seconds;
   
-    // Storing start time
     clock_t start_time = clock();
   
-    // looping till required time is not achieved
-    while (clock() < start_time + milli_seconds)
-        ;
+    while (clock() < start_time + milli_seconds);
 }
 
 //*********** Potions *******************
@@ -214,6 +211,7 @@ int hpPotion (int hp, int size)
 {      
     int potential = rand() % 6 + 3;
     int newHp = hp  + (potential * size);
+    //if(newHp >= maxHp){newHp = maxHp;}
 
     return newHp;
 }
@@ -223,7 +221,7 @@ int hpPotion (int hp, int size)
 int evolution(int a){
     // EVOLTION FUNCTION
 }
-int calculateXp(int pPName, int eHp, int xp, int level){ //, int Fevolv, int Sevolv, int Tevolv
+int calculateXp(char *pPName, int eHp, int xp, int level){ //, int Fevolv, int Sevolv, int Tevolv
 
     int newXp = eHp/5;
     xp = xp + newXp;
@@ -252,8 +250,8 @@ int calculateXp(int pPName, int eHp, int xp, int level){ //, int Fevolv, int Sev
 // ******************** Battle Function *********************************
 
 // Variable that start whith 'p' is player atributs, 'e' is enimy atributs
-int battle (int pPName, int pType, int pHp, int pNAtk1, int pMimAtk1, int pMxAtk1, int pNAtk2, int pMimAtk2, int pMxAtk2, int pDodge, int Rption, int Sption, int Mption, int xp, int level,
-            int ePName, int eType, int eHp, int eNAtk1, int eMimAtk1, int eMxAtk1, int eNAtk2, int eMimAtk2, int eMxAtk2, int eDodge)
+int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int pMxAtk1, char *pNAtk2, int pMimAtk2, int pMxAtk2, int pDodge, int Rption, int Sption, int Mption, int xp, int level,
+            char *ePName, char *eType, int eHp, char *eNAtk1, int eMimAtk1, int eMxAtk1, char *eNAtk2, int eMimAtk2, int eMxAtk2, int eDodge)
 {
     int winner = 0;
     int pDamage, eDamage;
@@ -323,7 +321,9 @@ int battle (int pPName, int pType, int pHp, int pNAtk1, int pMimAtk1, int pMxAtk
                 printf("%s heal %i with Regular Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
+                if(pHp >= maxHp){pHp = maxHp;}
                 printf("Now %s has %iHP\n", pPName, pHp);
+                Rption --;
 
             } else if(choisePotion == 2 && Sption > 0){
 
@@ -331,7 +331,9 @@ int battle (int pPName, int pType, int pHp, int pNAtk1, int pMimAtk1, int pMxAtk
                 printf("%s heal %i with Super Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
+                if(pHp >= maxHp){pHp = maxHp;}
                 printf("Now %s has %iHP\n", pPName, pHp);
+                Sption --;
 
             } else if (choisePotion >= 3 && Mption > 0){
 
@@ -339,7 +341,9 @@ int battle (int pPName, int pType, int pHp, int pNAtk1, int pMimAtk1, int pMxAtk
                 printf("%s heal %i with Max Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
+                if(pHp >= maxHp){pHp = maxHp;}
                 printf("Now %s has %iHP\n", pPName, pHp);
+                Mption --;
 
             }  if(pHp >= maxHp){pHp = maxHp;}
 
