@@ -182,7 +182,7 @@ int main(void)
                 printf("Now %s has %iHP!\n", pPokmon.atri.pokemonName, pPokmon.atri.pHp);
 
             }else{
-
+                // ROCK WAY
             }
 
         } else{}
@@ -221,7 +221,7 @@ int hpPotion (int hp, int size)
 // **** Calculate XP and Evolv ****
 
 int evolution(int a){
-
+    // EVOLTION FUNCTION
 }
 int calculateXp(int pPName, int eHp, int xp, int level){ //, int Fevolv, int Sevolv, int Tevolv
 
