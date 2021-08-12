@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 int main(void)
 {   
@@ -139,10 +140,21 @@ int main(void)
                 break;
 
             }
+
+            // *** Pointer to new level atributes ***
+            int *newHp = &pPokmon.atri.pHp;
+            int *newXp = &pPokmon.lv.xp; 
+            int *newLevel = &pPokmon.lv.level; 
+            int *newMimAtk1 = &pPokmon.atk.mimAtk1; 
+            int *newMxAtk1 = &pPokmon.atk.mxAtk1;
+            int *newMimAtk2 = &pPokmon.atk.mimAtk2; 
+            int *newMxAtk2 = &pPokmon.atk.mxAtk2;
+
+
             delay(1);
             printf("Congratulations %s! The %s is a great choise! Lets explore Kanto to find news pokemons!", playerName, pPokmon.atri.pokemonName);
             delay(1);
-            printf("Can you see a Zubat in that tree? Lets fight with it!\n");
+            printf("\nCan you see a Zubat in that tree? Lets fight with it!\n");
             delay(1);
 
             // ********************************* Enymi Pokemons Atributes *********************************
@@ -163,9 +175,11 @@ int main(void)
             //****************************** END Enymi Pokemons Atributes END ******************************
 
             battle(pPokmon.atri.pokemonName, pPokmon.atri.type, pPokmon.atri.pHp, pPokmon.atk.nAtk1, pPokmon.atk.mimAtk1, pPokmon.atk.mxAtk1, pPokmon.atk.nAtk2, pPokmon.atk.mimAtk2, pPokmon.atk.mxAtk2, pPokmon.atri.dodge, pPokmon.ptions.Rption, pPokmon.ptions.Sption, pPokmon.ptions.Mption, pPokmon.lv.xp, pPokmon.lv.level,
-                   zubat.atri.pokemonName, zubat.atri.type, zubat.atri.pHp, zubat.atk.nAtk1, zubat.atk.mimAtk1, zubat.atk.mxAtk1, zubat.atk.nAtk2, zubat.atk.mimAtk2, zubat.atk.mxAtk2, zubat.atri.dodge);
+                   zubat.atri.pokemonName, zubat.atri.type, zubat.atri.pHp, zubat.atk.nAtk1, zubat.atk.mimAtk1, zubat.atk.mxAtk1, zubat.atk.nAtk2, zubat.atk.mimAtk2, zubat.atk.mxAtk2, zubat.atri.dodge,
+                   newHp, newXp, newLevel, newMimAtk1, newMxAtk1, newMimAtk2, newMxAtk2);
+           // printf("%iHp, %iXp, %i level, %i Mim atack 1, %i Max atack 1, %i Mim atack 2, %i Max atack 2", pPokmon.atri.pHp, pPokmon.lv.xp, pPokmon.lv.level, pPokmon.atk.mimAtk1, pPokmon.atk.mxAtk1, pPokmon.atk.mimAtk2, pPokmon.atk.mxAtk2);
 
-            delay(1);
+            delay(2);
 
             // *** Fork for Florest and Rock ***
             printf("Now that you alredy now how to use your pokemon, you can choose to conitune your journy by going: \n1 - Florest Way \n2 - Rocks Way\n");
@@ -177,7 +191,7 @@ int main(void)
                 printf("%s you have choice the florest way, its a hard way, Good Luck!\n", playerName);
                 delay(1);
                 printf("I will give you a potion to to make %s stronger!\n", pPokmon.atri.pokemonName);
-                pPokmon.atri.pHp = hpPotion(pPokmon.atri.pHp, 1);
+                //pPokmon.atri.pHp = hpPotion(pPokmon.atri.pHp, 1);
                 delay(1);
                 printf("Now %s has %iHP!\n", pPokmon.atri.pokemonName, pPokmon.atri.pHp);
 
@@ -206,57 +220,78 @@ void delay(int number_of_seconds)
 
 //*********** Potions *******************
 
-// ** Hp Potion **
-int hpPotion (int hp, int size)
-{      
-    int potential = rand() % 6 + 3;
-    int newHp = hp  + (potential * size);
-    //if(newHp >= maxHp){newHp = maxHp;}
 
-    return newHp;
-}
 
 // **** Calculate XP and Evolv ****
 
-int evolution(int a){
-    // EVOLTION FUNCTION
-}
-int calculateXp(char *pPName, int eHp, int xp, int level){ //, int Fevolv, int Sevolv, int Tevolv
+int calculateXp(char *pPName, int eHp, int xp){ //, int Fevolv, int Sevolv, int Tevolv
 
-    int newXp = eHp/5;
+    int newXp = eHp/4;
     xp = xp + newXp;
 
-    printf("%iXP Won\n %s was %i ", newXp, pPName, xp);
+    printf("\n%iXP Won\n%s now was %iXP\n ", newXp, pPName, xp);
 
-    if(xp >= 100){delay(1);level++; printf("%s has evolved to level:%i\n", pPName, level);}
+    return xp;
+}
+
+int calculateLevel(char *pPName,int xp, int *level, int *hp, 
+     int *mimAtk1,int *mxAtk1, int *mimAtk2, int *mxAtk2){
+    
+    int vLevel = *level;
+    int vHp = *hp;
+    int vmimAtk1 = *mimAtk1;
+    int vmxAtk1 = *mxAtk1;
+    int vmimAtk2 = *mimAtk2;
+    int vmxAtk2 = *mxAtk2;
+    xp = 100;
+
+    if(xp >= 100){
+
+    delay(1);
+    *level = vLevel + 1; 
+    *hp = ceil(vHp * 1.03);
+    *mimAtk1 = ceil(vmimAtk1 * 1.03);
+    *mxAtk1 = ceil(vmxAtk1 * 1.03);
+    *mimAtk2 = ceil(vmimAtk2 * 1.03);
+    *mxAtk2 = ceil(vmxAtk2 * 1.03);
+
+    printf("\n%s has evolved to level:%i \nHP = %i \nMim Atack 1 = %i \nMax Atack 1 = %i \nMim Atack 2 = %i \nMax Atack 2 = %i\n", 
+    pPName, *level, *hp, *mimAtk1, *mxAtk1, *mimAtk2, *mxAtk2);
+
+    }
+
+    return level;
+}
+int calculateEvolution(int level){
 
     switch(level){
         case 25:
-        evolution(1);
+        
         break;
 
         case 50:
-        evolution(2);
+        
         break;
 
         case 70:
-        evolution(3);
+        
         break;
     }
 
-    return xp;
+    return level;
 }
 
 // ******************** Battle Function *********************************
 
 // Variable that start whith 'p' is player atributs, 'e' is enimy atributs
 int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int pMxAtk1, char *pNAtk2, int pMimAtk2, int pMxAtk2, int pDodge, int Rption, int Sption, int Mption, int xp, int level,
-            char *ePName, char *eType, int eHp, char *eNAtk1, int eMimAtk1, int eMxAtk1, char *eNAtk2, int eMimAtk2, int eMxAtk2, int eDodge)
+            char *ePName, char *eType, int eHp, char *eNAtk1, int eMimAtk1, int eMxAtk1, char *eNAtk2, int eMimAtk2, int eMxAtk2, int eDodge,
+            int *newHp, int *newXp, int *newLevel, int *newMimAtk1, int *newMxAtk1, int *newMimAtk2, int *newMxAtk2)
 {
     int winner = 0;
     int pDamage, eDamage;
     int pCDodge, eCDodge; //Chance of Dodge
-    int maxHp = pHp;
+    int pMaxHp = pHp, eMaxHp = eHp;
 
     srand(time(NULL));
     // Winner = 1 Player wins
@@ -265,8 +300,6 @@ int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int 
     printf("\nYou have enter in a battle against %s!\n", ePName);
 
     do{
-
-        
 
         //Enimy Attack
         delay(1);
@@ -304,7 +337,7 @@ int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int 
         if (patk == 1)
         {   
             printf("%s will attack with %s\n", pPName, pNAtk1); //Firts atk
-            eDamage = rand() % pMxAtk1 + pMimAtk1;
+            pDamage = rand() % pMxAtk1 + pMimAtk1;
         } else if (patk == 2){
             printf("%s will attack with %s\n", pPName, pNAtk2); // Second atk
             pDamage = rand() % pMxAtk2 + pMimAtk2;
@@ -321,31 +354,31 @@ int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int 
                 printf("%s heal %i with Regular Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
-                if(pHp >= maxHp){pHp = maxHp;}
-                printf("Now %s has %iHP\n", pPName, pHp);
+                if(pHp >= pMaxHp){pHp = pMaxHp;}
+                printf("Now %s has %iHP\n\n", pPName, pHp);
                 Rption --;
 
             } else if(choisePotion == 2 && Sption > 0){
 
-                heal = 40;
+                heal = 50;
                 printf("%s heal %i with Super Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
-                if(pHp >= maxHp){pHp = maxHp;}
-                printf("Now %s has %iHP\n", pPName, pHp);
+                if(pHp >= pMaxHp){pHp = pMaxHp;}
+                printf("Now %s has %iHP\n\n", pPName, pHp);
                 Sption --;
 
             } else if (choisePotion >= 3 && Mption > 0){
 
-                heal = maxHp;
+                heal = pMaxHp;
                 printf("%s heal %i with Max Potion\n", pPName, heal);
                 delay(1);
                 pHp = pHp + heal;
-                if(pHp >= maxHp){pHp = maxHp;}
-                printf("Now %s has %iHP\n", pPName, pHp);
+                if(pHp >= pMaxHp){pHp = pMaxHp;}
+                printf("Now %s has %iHP\n\n", pPName, pHp);
                 Mption --;
 
-            }  if(pHp >= maxHp){pHp = maxHp;}
+            }  if(pHp >= pMaxHp){pHp = pMaxHp;}
 
         }
         eCDodge = rand() % 100 + 1;
@@ -367,7 +400,9 @@ int battle (char *pPName, char *pType, int pHp, char *pNAtk1, int pMimAtk1, int 
 
     delay(1);
     printf("%s has died %s Winns!", ePName, pPName);
-    calculateXp(pPName, eHp, xp, level);
+
+    *newXp = calculateXp(pPName, eMaxHp, xp);
+    calculateLevel(pPName, xp, newLevel, newHp, newMimAtk1, newMxAtk1, newMimAtk2, newMxAtk2);
 
     return winner;
 }
