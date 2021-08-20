@@ -221,11 +221,11 @@ int main(void)
 
             delay(3);
 
-            // *** Fork for Florest and Rock ***
-            printf("\nNow that you alredy now how to use your pokemon, you can choose to conitune your journy by going: \n1 - Forest Way \n2 - Rocks Way\n");
-            scanf("%i", &wayChoise);
+            // *** Flores way starts ***
+            printf("\nNow that you alredy now how to use your pokemon, you can choose to conitune your journy by going: \n1 - Forest Way \n");
+            scanf("%i", wayChoise);
             
-            if(wayChoise == 1)
+            if(wayChoise == wayChoise)
             {   
                 delay(1);
                 printf("%s you have choice the forest way, its a hard way\n", playerName);
@@ -276,10 +276,17 @@ int main(void)
 
                 } else { delay(1); printf("You has moved on from %s\n", zigzagoon.atri.pokemonName);}
 
+            delay(1);
+            printf("There is a strange noise comming from that way\n");
+            delay(1);
+            printf("%s get closer to the bush\n", playerName);
+            delay(2);
+            printf("%s appears\n", scyther.atri.pokemonName);
 
-            }else{
-                // ROCK WAY
-            }
+            battle(pPokmon.atri.pokemonName, pPokmon.atri.type, pPokmon.atri.pHp, pPokmon.atk.nAtk1, pPokmon.atk.mimAtk1, pPokmon.atk.mxAtk1, pPokmon.atk.nAtk2, pPokmon.atk.mimAtk2, pPokmon.atk.mxAtk2, pPokmon.atri.dodge, pPokmon.ptions.Rption, pPokmon.ptions.Sption, pPokmon.ptions.Mption, pPokmon.lv.xp, pPokmon.lv.level,
+                   pPokmon.fEvolv.tributF.pokemonName, pPokmon.fEvolv.tributF.pHp, pPokmon.fEvolv.atkF.mimAtk1, pPokmon.fEvolv.atkF.mxAtk1, pPokmon.fEvolv.atkF.mimAtk2, pPokmon.fEvolv.atkF.mxAtk2,
+                   scyther.atri.pokemonName, scyther.atri.type, scyther.atri.pHp, scyther.atk.nAtk1, scyther.atk.mimAtk1, scyther.atk.mxAtk1, scyther.atk.nAtk2, scyther.atk.mimAtk2, scyther.atk.mxAtk2, scyther.atri.dodge,
+                   newName, newHp, newXp, newLevel, newMimAtk1, newMxAtk1, newMimAtk2, newMxAtk2);
 
         } else{}
 
@@ -300,13 +307,9 @@ void delay(int number_of_seconds)
     while (clock() < start_time + milli_seconds);
 }
 
-//*********** Potions *******************
-
-
-
 // **** Calculate XP and Evolv ****
 
-int calculateXp(char *pPName, int eHp, int xp){ //, int Fevolv, int Sevolv, int Tevolv
+int calculateXp(char *pPName, int eHp, int xp){
 
     int newXp = eHp*2;
     xp = xp + newXp;
@@ -317,7 +320,8 @@ int calculateXp(char *pPName, int eHp, int xp){ //, int Fevolv, int Sevolv, int 
 }
 
 int calculateLevel(char *pPName,int xp, int *level, int *hp, 
-     int *mimAtk1,int *mxAtk1, int *mimAtk2, int *mxAtk2){
+     int *mimAtk1,int *mxAtk1, int *mimAtk2, int *mxAtk2)
+    {
     
     if(xp >= 100){
     
@@ -335,25 +339,28 @@ int calculateLevel(char *pPName,int xp, int *level, int *hp,
     *mimAtk2 = ceil(vmimAtk2 * 1.03);
     *mxAtk2 = ceil(vmxAtk2 * 1.03);
 
-    delay(1);
+    delay (1);
     printf("\n%s has evolved to level:%i \nHP = %i \nMim Atack 1 = %i \nMax Atack 1 = %i \nMim Atack 2 = %i \nMax Atack 2 = %i\n", 
     pPName, *level, *hp, *mimAtk1, *mxAtk1, *mimAtk2, *mxAtk2);
 
     }
-
+    
     return level;
 }
 int calculateEvolution(int level, char *pokemonName, int *hp, int *mimAtk1,int *mxAtk1, int *mimAtk2, int *mxAtk2,
   int fName, int fHp, int fMimatk1, int fMxatk1, int fMimatk2, int fMxatk2){
-      level = 10;
+
     switch(level){
-        case 10:
+        case 4:
         *pokemonName = fName;
         *hp = fHp;
         *mimAtk1 = fMimatk1;
         *mxAtk1 = fMxatk1;
         *mimAtk2 = fMimatk2;
         *mxAtk2 = fMxatk2; 
+        printf("\nYour Pokemon has evolved to %s \nHP = %i \nMim Atack 1 = %i \nMax Atack 1 = %i \nMim Atack 2 = %i \nMax Atack 2 = %i\n", 
+    pokemonName, *hp, *mimAtk1, *mxAtk1, *mimAtk2, *mxAtk2);
+
         break;
     }
 
